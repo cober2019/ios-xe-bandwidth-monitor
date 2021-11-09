@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 import os
 import json
 import requests
+import ssl
 import devicecalls as GetThisDataFromDevice
 
 headers_ios = {"Content-Type": 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
