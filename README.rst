@@ -22,3 +22,20 @@ The following dependencies are required. If you don't have the following depende
     |   -NPM && Node.js https://docs.npmjs.com/downloading-and-installing-node-js-and-npm
     |   -Python: https://docs.python-guide.org/starting/install3/linux/
     |   -Open SSL
+    
+**Once Dependecies Are Installed:**
+    |
+    |   **Note: If you're using windows 10, you can use built-in Ubuntu** 
+    |   
+    |   1. Clone this repo to you server and navigate to the /ios-xe-bandwidth-monitor (root) directory. 
+    |   2. Execute command "sudo bash init_app_routes" which will take care of everything below. When running the script, SSL certs will be created for app to api security.                TLSv1.3 for transport.
+    |
+    |   **If you want to manualy install then continue with these steps:**
+    |
+    |   2. Located package.json and execute code "npm install package.json"
+    |   3. Once packages are installed, execute code "node server.js&"
+    |   4. Navigate to 127.0.0.1:3000
+    |   5. Create a virtual environment by executing "python3.8 -m venv ios-xe-bandwdith-monitor-env" and activate the env using "source ios-xe-bandwdith-monitor-env/bin/activate"
+    |   6. Install python modules using pip "pip install -r requirements.txt"
+    |   7. Start the API using "Python3 api_routes.py"
+    |   8. Go back to the web app and login to your device
