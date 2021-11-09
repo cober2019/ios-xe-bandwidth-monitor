@@ -56,7 +56,7 @@ def ios_xe_login() -> dict:
 
     except (json.decoder.JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, UnboundLocalError):
         auth_dict['status'] = 500
-    print(auth_dict)
+
     return auth_dict
 
 @app.route('/liveinterfaces', methods=['POST', 'GET'])
