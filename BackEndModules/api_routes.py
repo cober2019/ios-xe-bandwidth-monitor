@@ -10,8 +10,8 @@ import requests
 import devicecalls as GetThisDataFromDevice
 
 headers_ios = {"Content-Type": 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
-#ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-#ctx.load_cert_chain(f'{os.getcwd()}/domainame.crt', f'{os.getcwd()}/domainame.key')
+ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+ctx.load_cert_chain(f'{os.getcwd()}/domainame.crt', f'{os.getcwd()}/domainame.key')
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
@@ -67,4 +67,4 @@ def live_interfaces():
     return {'interfaces': interfaces}
 
 if __name__ == '__main__':
-    app.run()
+    app.run(ssl_context=ctx)
