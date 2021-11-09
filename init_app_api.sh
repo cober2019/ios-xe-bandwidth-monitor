@@ -5,6 +5,7 @@
 
 #INSTALL APP DEPENDINCIES
 npm install package.json -y
+npm install express
 
 #START APP
 node server.js&
