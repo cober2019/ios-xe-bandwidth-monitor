@@ -13,7 +13,6 @@ headers_ios = {"Content-Type": 'application/yang-data+json', 'Accept': 'applicat
 #ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
 #ctx.load_cert_chain(f'{os.getcwd()}/domainame.crt', f'{os.getcwd()}/domainame.key')
 
-
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
@@ -28,7 +27,6 @@ def token() -> dict:
 def ios_xe_login() -> dict:
     """Authenticates credentials to device. Check device capabilities"""
 
-    # Reset our rib status object
     auth_dict = {'status': 'null'}
 
     try:
