@@ -39,3 +39,5 @@ The following dependencies are required. If you don't have the following depende
     |   6. Install python modules using pip "pip install -r requirements.txt"
     |   7. Start the API using "Python3 api_routes.py"
     |   8. Go back to the web app and login to your device
+
+.. image:: https://github.com/cober2019/ios-xe-bandwidth-monitor/blob/main/images/liveInterfaces.PNG
