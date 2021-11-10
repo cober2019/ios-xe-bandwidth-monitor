@@ -18,6 +18,7 @@
     "datatables.net-buttons": "^1.7.1",
     "datatables.net-buttons-dt": "^1.7.1",
     "datatables.net-dt": "^1.10.25",
+    "express": "^4.17.1",
     "http-proxy-middleware": "^2.0.1",
     "jquery": "^3.6.0",
     "keycharm": "^0.4.0",
@@ -35,8 +36,7 @@
     "react-scripts": "4.0.3",
     "recoil": "^0.4.1",
     "wait-on": "^5.3.0",
-    "web-vitals": "^1.1.2",
-    "express": ""
+    "web-vitals": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
