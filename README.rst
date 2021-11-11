@@ -40,4 +40,7 @@ The following dependencies are required. If you don't have the following depende
     |   7. Start the API using "Python3 api_routes.py"
     |   8. Go back to the web app and login to your device
 
+**Other**
+  This program communicates  using two protocols, ssh and https/restconf. All connectivity is located in BackendModules/device_calls.py
+  
 .. image:: https://github.com/cober2019/ios-xe-bandwidth-monitor/blob/main/images/liveInterfaces.PNG
