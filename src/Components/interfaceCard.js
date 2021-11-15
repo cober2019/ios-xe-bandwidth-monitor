@@ -38,61 +38,63 @@ return      <div id={props.value.name}>
               <canvas ref={interfacesRef} height="300px"/>
             </Row>
             <br/>
-              <Row style={{textAlign: 'left'}}>
+              <Row>
                   <Col xl={3}>
-                    <p >Speed:</p>
-                    <p >Status:</p>
-                    <p >IP:</p>
-                    <p >MTU:</p>
-                    <p >Mbps Out:</p>
-                    <p >Mbps In:</p>
-                    <p >Mbps Out Diff:</p>
-                    <p >Mbps In Diff:</p>
+                    <p className="card-text">Speed:</p>
+                    <p className="card-text">Status:</p>
+                    <p className="card-text">IP:</p>
+                    <p className="card-text">MTU:</p>
+                    <p className="card-text">Mbps Out:</p>
+                    <p className="card-text">Mbps In:</p>
+                    <p className="card-text">Mbps Out Diff:</p>
+                    <p className="card-text">Mbps In Diff:</p>
                   </Col>
-                  <Col xl={4}>
-                    <p >{Math.round(parseInt(props.value.speed) / 1000000000) * 1000 } (Mbps)</p>
-                    <p >{props.value['oper-status']}</p>
-                    {props.value.ipv4 ? <p >{props.value.ipv4}</p> : <p >n/a</p>}
-                    <p >{props.value.mtu}</p>
-                    <p >{props.value['statistics']['tx-kbps']}</p>
-                    <p >{props.value['statistics']['rx-kbps']}</p>
-                    <p >{props.value.outbandwidthDiff}</p>
-                    <p >{props.value.inbandwidthDiff}</p>
+                  <Col xl={3}>
+                    <p className="card-text">{Math.round(parseInt(props.value.speed) / 1000000000) * 1000 } (Mbps)</p>
+                    <p className="card-text">{props.value['oper-status']}</p>
+                    {props.value.ipv4 ? <p className="card-text">{props.value.ipv4}</p> : <p className="card-text">n/a</p>}
+                    <p className="card-text">{props.value.mtu}</p>
+                    <p className="card-text">{props.value['statistics']['tx-kbps']}</p>
+                    <p className="card-text">{props.value['statistics']['rx-kbps']}</p>
+                    <p className="card-text">{props.value.outbandwidthDiff}</p>
+                    <p className="card-text">{props.value.inbandwidthDiff}</p>
                   </Col>
-                  <Col xl={2}>
-                    <p >PPs Out:</p>
-                    <p >PPs In:</p>
-                    <p >InDis:</p>
-                    <p >OutDis:</p>
-                    <p >InErr:</p>
-                    <p >InDis:</p>
-                    <p >CRC:</p>
-                    <p >InDis:</p>
+                  <Col xl={3}>
+                    <p className="card-text">PPs Out:</p>
+                    <p className="card-text">PPs In:</p>
+                    <p className="card-text">InDis:</p>
+                    <p className="card-text">OutDis:</p>
+                    <p className="card-text">InErr:</p>
+                    <p className="card-text">InDis:</p>
+                    <p className="card-text">CRC:</p>
+                    <p className="card-text">InDis:</p>
+
                   </Col>
-                  <Col xl={2}>
-                    <p >{props.value['statistics']['rx-pps']}</p>
-                    <p >{props.value['statistics']['tx-pps']}</p>
-                    <p >{props.value['statistics']['in-discards']}</p>
-                    <p >{props.value['statistics']['out-discards']}</p>
-                    <p >{props.value['statistics']['in-errors']}</p>
-                    <p >{props.value['statistics']['out-errors']}</p>
-                    <p >{props.value['statistics']['in-crc-errors']}</p>
-                    <p >{props.value['statistics']['num-flaps']}</p>
+                  <Col xl={3}>
+                    <p className="card-text">{props.value['statistics']['rx-pps']}</p>
+                    <p className="card-text">{props.value['statistics']['tx-pps']}</p>
+                    <p className="card-text">{props.value['statistics']['in-discards']}</p>
+                    <p className="card-text">{props.value['statistics']['out-discards']}</p>
+                    <p className="card-text">{props.value['statistics']['in-errors']}</p>
+                    <p className="card-text">{props.value['statistics']['out-errors']}</p>
+                    <p className="card-text">{props.value['statistics']['in-crc-errors']}</p>
+                    <p className="card-text">{props.value['statistics']['num-flaps']}</p>
                     
                   </Col>
                 </Row>
-                <Row style={{textAlign: 'left'}}> 
+                <Row>
                   <Col xl={3} className="mt-3">
-                  <p >Description:</p>
-                    <p >LastChange:</p>
+                  <p className="card-text">Description:</p>
+                    <p className="card-text">LastChange:</p>
                   </Col>
                   <Col xl={9} className="mt-3">
-                    {props.value.description ? <p >{props.value.description}</p>: <p  >n/a</p>}
-                    <p >{props.value['statistics']['discontinuity-time'].split('.')[0]}</p>
+                  <p className="card-text">{props.value.description}</p>
+                    <p className="card-text">{props.value['statistics']['discontinuity-time'].split('.')[0]}</p>
                   </Col>
                 
                 </Row>
                 </div>
 
   }
+  
   
