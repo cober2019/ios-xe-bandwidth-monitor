@@ -17,7 +17,12 @@ Check to see if your device is compatible to use this program. Use the following
     |   -ISR 4000 Series
     |   -CSR 1000v
     |   -CAT 3000 Series
-    
+
+Easy With Docker
+-----------------
+
+Visit https://hub.docker.com/r/cober2019/cisco_xe_bandwidth_monitor or just execute "docker pull cober2019/cisco_xe_bandwidth_monitor" from docker CLI
+
 Install:Linux
 --------------
 The following dependencies are required. If you don't have the following dependencies installed, execute:  "sudo bash install_dependencies.sh"
