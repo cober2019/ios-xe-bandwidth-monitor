@@ -20,8 +20,8 @@ Check to see if your device is compatible to use this program. Use the following
 
 Easy With Docker
 -----------------
-Visit https://hub.docker.com/r/cober2019/cisco_xe_bandwidth_monitor or just execute "docker pull cober2019/cisco_xe_bandwidth_monitor" from docker CLI.
-When running the image set Local Host option to 3000. The container port should display 3000/tcp to the right.
+ Visit https://hub.docker.com/r/cober2019/cisco_xe_bandwidth_monitor or just execute "docker pull cober2019/cisco_xe_bandwidth_monitor" from docker CLI.
+ When running the image set Local Host option to 3000. The container port should display 3000/tcp to the right.
 
 Install:Linux
 --------------
