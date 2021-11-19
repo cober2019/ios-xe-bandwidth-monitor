@@ -18,8 +18,8 @@ Check to see if your device is compatible to use this program. Use the following
     |   -CAT 3000 Series
     
 **YANG models options:** 
-    |   -ietf-interfaces:interfaces-state. Using this the program calculates the bandwidth. In turn, maybe slightly less accurate but still close
-    |   -Cisco-IOS-XE-interfaces-oper:interfaces. Exact band calculated by the device. The progam only converts from kbps to mbps
+    |   -ietf-interfaces:interfaces-state. When using this model the program calculates the bandwidth. In turn, data may be slightly less accurate but still close
+    |   -Cisco-IOS-XE-interfaces-oper:interfaces. Exact bandwidth calculated by the device. The progam only converts from kbps to mbps
     
 **Easy With Docker (Image needs to be updated to reflect IETF Model)**
 
