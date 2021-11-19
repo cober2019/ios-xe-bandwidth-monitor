@@ -9,15 +9,16 @@ import json
 import requests
 import ssl
 import devicecalls as GetThisDataFromDevice
+import BandwidthTool as GetBandwidth
 
+bandwidth_object = None
 headers_ios = {"Content-Type": 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
-ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-ctx.load_cert_chain(f'{os.getcwd()}/domainame.crt', f'{os.getcwd()}/domainame.key')
+#ctx = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+#ctx.load_cert_chain(f'{os.getcwd()}/domainame.crt', f'{os.getcwd()}/domainame.key')
 
 app = Flask(__name__)
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 jwt = JWTManager(app)
-
 
 @app.route('/token', methods=['POST', 'GET'])
 def token() -> dict:
@@ -28,6 +29,7 @@ def token() -> dict:
 def ios_xe_login() -> dict:
     """Authenticates credentials to device. Check device capabilities"""
 
+    global bandwidth_object
     auth_dict = {'status': 'null'}
 
     try:
@@ -35,14 +37,8 @@ def ios_xe_login() -> dict:
             headers=headers_ios, verify=False, auth=(request.json.get('username', {}), request.json.get('password', {})))
 
         if response.status_code == 200:
-            model_serial = GetThisDataFromDevice.get_model(request.json.get('username'), request.json.get('password'), request.json.get('ip'))
+            bandwidth_object = GetBandwidth.CalcBandwidth(request.json.get('ip', {}), request.json.get('port', {}), request.json.get('username', {}), request.json.get('password', {}))
             auth_dict['status'] = 200
-            auth_dict['model'] = model_serial[0]
-            auth_dict['serial'] = model_serial[1]
-            auth_dict['uptime'] = model_serial[2]
-            auth_dict['software'] = model_serial[3]
-            auth_dict['capabilities'] = json.loads(response.text)
-            
         elif response.status_code == 400:
             auth_dict['status'] = 400
         elif response.status_code == 401:
@@ -67,5 +63,14 @@ def live_interfaces():
 
     return {'interfaces': interfaces}
 
+@app.route('/interface_stats_ietf', methods=['POST', 'GET'])
+def interface_stats():
+    """Get interface stats via IETF-interface yang model"""
+
+    bandwidth_usage_all = bandwidth_object.get_interface_bandwith_all()
+
+    return {'stats': bandwidth_usage_all}
+    
 if __name__ == '__main__':
-    app.run(ssl_context=ctx)
+    app.run()
+ 
