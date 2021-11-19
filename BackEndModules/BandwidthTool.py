@@ -91,8 +91,11 @@ class CalcBandwidth:
         self.poll_interval = 0
 
     def get_interface_bandwith_all(self):
-        """Calculate outbound bandwidth"""
-
+        """Calculate bandwidth"""
+        
+        mbps_out = 0
+        mbps_in = 0
+        
         #Get Interface stats
         interface_stats = get_interface_stats(self.host, self.port, self.username, self.password)
 
