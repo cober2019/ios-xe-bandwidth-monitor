@@ -100,7 +100,7 @@ class CalcBandwidth:
         mbps_in = 0
 
         if polling_interval is not None:
-            self.polling_interval = polling_interval
+            self.polling_interval = polling_interval / 1000
 
         #Get Interface stats
         interface_stats = get_interface_stats(self.host, self.port, self.username, self.password)

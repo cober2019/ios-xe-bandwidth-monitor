@@ -67,9 +67,9 @@ def live_interfaces():
 def interface_stats():
     """Get interface stats via IETF-interface yang model"""
     print(request.json)
-    bandwidth_usage_all = bandwidth_object.get_interface_bandwith_all()
+    bandwidth_usage_all = bandwidth_object.get_interface_bandwith_all(int(request.json.get('pollingInterval')))
 
-    return {'stats': bandwidth_usage_all}
+    return {'stats': bandwidth_usage_all, 'data': 'newData'}
     
 if __name__ == '__main__':
     app.run()
