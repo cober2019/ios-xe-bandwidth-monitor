@@ -21,7 +21,7 @@ Check to see if your device is compatible to use this program. Use the following
     |   -ietf-interfaces:interfaces-state. Using this the program calculates the bandwidth. In turn, maybe slightly less accurate but still close
     |   -Cisco-IOS-XE-interfaces-oper:interfaces. Exact band calculated by the device. The progam only converts from kbps to mbps
     
-Easy With Docker (Image need updated to reflect IETF Model)
+Easy With Docker (Image needs to be updated to reflect IETF Model)
 -----------------
 Visit https://hub.docker.com/r/cober2019/cisco_xe_bandwidth_monitor or just execute "docker pull cober2019/cisco_xe_bandwidth_monitor" from docker CLI.
 When running the image set Local Host option to 3000. The container port should display 3000/tcp to the right.
