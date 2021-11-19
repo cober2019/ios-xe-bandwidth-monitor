@@ -63,13 +63,15 @@ def get_interface_stats(ip:str, port:int, username:str, password:str) -> list:
         interface_details = get_interface_details(ip, port, username, password)
 
         #Iterate through bother lists and add k/v pairs for the missing data
-        for ints_stats, int_details in zip(interfaces_stats, interface_details):
-            try:
-                ints_stats['ip_address'] = f"{int_details.get('ietf-ip:ipv4', {}).get('address', {})[0].get('ip')} {int_details.get('ietf-ip:ipv4', {}).get('address', {})[0].get('netmask')}"
-                ints_stats['description'] = int_details.get('description', 'n/a')
-            except KeyError:
-                ints_stats['ip_address'] = 'Not Assigned'
-                ints_stats['description'] = int_details.get('description', 'n/a')
+        for ints_stats in interfaces_stats:
+            for int_details in interface_details:
+                if ints_stats.get("name") == int_details.get("name"):
+                    try:
+                        ints_stats['ip_address'] = f"{int_details.get('ietf-ip:ipv4', {}).get('address', {})[0].get('ip')} {int_details.get('ietf-ip:ipv4', {}).get('address', {})[0].get('netmask')}"
+                        ints_stats['description'] = int_details.get('description', 'n/a')
+                    except KeyError:
+                        ints_stats['ip_address'] = 'Not Assigned'
+                        ints_stats['description'] = int_details.get('description', 'n/a')
 
 
     except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, AttributeError) as e:
