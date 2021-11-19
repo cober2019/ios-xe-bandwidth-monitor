@@ -20,7 +20,6 @@ import {encytpKey, client}  from '../App'
 
 export function IetfLiveInterfaces(){
   const [decrypt] = useRecoilState(encytpKey);
-  const [intervalMs, setIntervalMs] = React.useState(20000)
   const [cache] = useRecoilState(client);
   const [modalShow, setModalShow] = React.useState(false);
   const [selectInterface, setSelectInterface] = React.useState(undefined)
@@ -28,8 +27,8 @@ export function IetfLiveInterfaces(){
   const { isLoading, error, data, isFetching } = useQuery(localStorage.getItem('ip') + 'interface_stats_ietf', async () => {
 
     const data = await axios.post('/interface_stats_ietf', {'pollingInterval': localStorage.getItem('pollingInterval')})
-    console.log(data)
 
+        
     return data
         
     },
@@ -69,7 +68,9 @@ export function IetfLiveInterfaces(){
                                 ))}
                         </Row>
                         <Row className="border-bottom mb-3 mt-3" style={{color: 'black'}}/>
-                        <SetInterval/>
+                        <ErrorBoundary  FallbackComponent={IsErrorFallback}>
+                          <SetInterval/>
+                        </ErrorBoundary>
                       </Col>
                       <Col xl={10}>
                         <Row>

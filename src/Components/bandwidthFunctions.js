@@ -41,3 +41,4 @@ export const BandwidthDiff = (cachedQuery, data) => {
     return data
 
 }
+

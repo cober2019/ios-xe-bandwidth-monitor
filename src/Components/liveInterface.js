@@ -14,6 +14,7 @@ import { IsErrorFallback } from "./errorComponent";
 import { PageLoader } from './pageLoader';
 import { BandwidthDiff } from './bandwidthFunctions';
 import { ShowInterface } from './interfaceModal';
+import { SetInterval } from './pollingInterval';
 import {encytpKey, client}  from '../App'
 
 export function LiveInterfaces(){
@@ -41,7 +42,7 @@ export function LiveInterfaces(){
         
     },
     {
-      refetchInterval: 2000
+      refetchInterval: parseInt(localStorage.getItem('pollingInterval')),
     }
   )
 
@@ -74,6 +75,10 @@ export function LiveInterfaces(){
                                 <button key={value} type="button" style={{marginBottom: "10px"}} className="btn btn-success btn-md" onClick={()=> interfaceFocus(value)}>{value.interface}</button>
                                 ))}
                         </Row>
+                        <Row className="border-bottom mb-3 mt-3" style={{color: 'black'}}/>
+                        <ErrorBoundary  FallbackComponent={IsErrorFallback}>
+                          <SetInterval/>
+                        </ErrorBoundary>
                       </Col>
                       <Col xl={10}>
                         <Row>
