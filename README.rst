@@ -49,6 +49,10 @@ The following dependencies are required. If you don't have the following depende
     |   8. Go back to the web app and login to your device
 
 **Other**
-  This program communicates  using two protocols, ssh and https/restconf. All connectivity is located in BackendModules/device_calls.py
+  -This program communicates  using two protocols, ssh and https/restconf. All connectivity is located in BackendModules/device_calls.py
+  
+**YANG models options:** 
+  -ietf-interfaces:interfaces-state. Using this the program calculates the bandwidth. In turn, maybe slightly less accurate but still close. 
+  -Cisco-IOS-XE-interfaces-oper:interfaces. Exact band calculated by the device. The progam only converts from kbps to mbps
   
 .. image:: https://github.com/cober2019/ios-xe-bandwidth-monitor/blob/main/images/bandwidth.PNG
