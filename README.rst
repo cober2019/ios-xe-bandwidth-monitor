@@ -17,8 +17,12 @@ Check to see if your device is compatible to use this program. Use the following
     |   -ISR 4000 Series
     |   -CSR 1000v
     |   -CAT 3000 Series
-
-Easy With Docker
+    
+**YANG models options:** 
+    |   -ietf-interfaces:interfaces-state. Using this the program calculates the bandwidth. In turn, maybe slightly less accurate but still close
+    |   -Cisco-IOS-XE-interfaces-oper:interfaces. Exact band calculated by the device. The progam only converts from kbps to mbps
+    
+Easy With Docker (Image need updated to reflect IETF Model)
 -----------------
 Visit https://hub.docker.com/r/cober2019/cisco_xe_bandwidth_monitor or just execute "docker pull cober2019/cisco_xe_bandwidth_monitor" from docker CLI.
 When running the image set Local Host option to 3000. The container port should display 3000/tcp to the right.
@@ -51,8 +55,5 @@ The following dependencies are required. If you don't have the following depende
 **Other**
   -This program communicates  using two protocols, ssh and https/restconf. All connectivity is located in BackendModules/device_calls.py
   
-**YANG models options:** 
-  -ietf-interfaces:interfaces-state. Using this the program calculates the bandwidth. In turn, maybe slightly less accurate but still close. 
-  -Cisco-IOS-XE-interfaces-oper:interfaces. Exact band calculated by the device. The progam only converts from kbps to mbps
   
 .. image:: https://github.com/cober2019/ios-xe-bandwidth-monitor/blob/main/images/bandwidth.PNG
