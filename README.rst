@@ -12,7 +12,6 @@ Requirements:
 Check to see if your device is compatible to use this program. Use the following instructions - https://developer.cisco.com/docs/ios-xe/#!enabling-restconf-on-ios-xe
 
 **Tested Models**
-    
     |   -ASR 1000 Series
     |   -ISR 4000 Series
     |   -CSR 1000v
