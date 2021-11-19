@@ -2,6 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { DeviceAuth }  from './Components/login.js';
 import { LiveInterfaces }  from './Components/liveInterface.js';
+import { IetfLiveInterfaces }  from './Components/ietf_live_interfaces';
 import { RecoilRoot, atom } from 'recoil';
 import {
   BrowserRouter as Router,
@@ -33,6 +34,14 @@ function App() {
           <RecoilRoot>
               <QueryClientProvider client={queryClient}>
                 <LiveInterfaces/>
+              </QueryClientProvider>
+            </RecoilRoot>
+          </Route>
+
+          <Route path="/ietf_live_interfaces">
+          <RecoilRoot>
+              <QueryClientProvider client={queryClient}>
+                <IetfLiveInterfaces/>
               </QueryClientProvider>
             </RecoilRoot>
           </Route>

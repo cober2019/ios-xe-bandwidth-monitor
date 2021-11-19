@@ -23,6 +23,8 @@ export  function Navigation(){
                 <div className="border-bottom" style={{color: 'black'}}/>
                 <Offcanvas.Body style={{backgroundColor: '#868F80'}}>
                   <Nav className="justify-content-end flex-grow-1 pe-3" >
+                    <Link style={{color: 'black', fontWeight: 'bold'}} className="nav-link " to='/live_interfaces'>Cisco Live Interfaces</Link>
+                      <Link style={{color: 'black', fontWeight: 'bold'}} className="nav-link " to='/ietf_live_interfaces'>IETF Live Interfaces</Link>
                       <Link style={{color: 'black', fontWeight: 'bold'}} className="nav-link " to='/logout'>Logout</Link>
                       <p className="nav-link  disabledCursor" style={{color: 'black', fontWeight: 'bold'}}>Connection: {localStorage.getItem('ip')}</p>
                   </Nav>
