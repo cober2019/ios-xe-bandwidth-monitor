@@ -73,7 +73,7 @@ def get_interface_stats(ip:str, port:int, username:str, password:str) -> list:
                         ints_stats['description'] = int_details.get('description', 'n/a')
 
 
-    except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, AttributeError) as e:
+    except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, AttributeError):
         pass
 
     return interfaces_stats
@@ -125,7 +125,7 @@ class CalcBandwidth:
         self.poll_iteration = 0
         self.polling_interval = 20
 
-    def get_interface_bandwith_all(self, polling_interval:int=None):
+    def get_interface_bandwith_all(self, polling_interval:int=None) -> list:
     
         #Get Interface stats
         interface_stats = get_interface_stats(self.host, self.port, self.username, self.password)
