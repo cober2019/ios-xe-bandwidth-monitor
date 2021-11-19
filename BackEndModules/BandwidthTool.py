@@ -81,27 +81,31 @@ def get_interface_stats(ip, port, username, password) -> list:
 class CalcBandwidth:
     """Bandwidth calculation class"""
 
-    def __init__(self,  host, port, username, password):
+    def __init__(self,  host:str, port:int, username:str, password:str):
 
         self.host = host
         self.port = port
         self.username = username
         self.password = password
         self.last_poll = None
-        self.poll_interval = 0
+        self.poll_iteration = 0
+        self.polling_interval = 20
 
-    def get_interface_bandwith_all(self):
-        """Calculate bandwidth"""
+    def get_interface_bandwith_all(self, polling_interval:int=None):
+        """Calculate outbound bandwidth"""
         
         mbps_out = 0
         mbps_in = 0
-        
+
+        if polling_interval is not None:
+            self.polling_interval = polling_interval
+
         #Get Interface stats
         interface_stats = get_interface_stats(self.host, self.port, self.username, self.password)
 
         #Check interval, the program will show really larger numbers if will dont skip interval one
-        if self.last_poll is not None or self.poll_interval > 1:
-            self.poll_interval = 2
+        if self.last_poll is not None or self.poll_iteration > 1:
+            self.poll_iteration = 2
             for interface in interface_stats:
                 for i in self.last_poll:
                     if interface.get("name") == i.get("name"):
@@ -109,13 +113,12 @@ class CalcBandwidth:
                             #Calculate stats subtract old stats from new. Conver from bytes to bits and divide. O yea, add new k/v to dictionary witht the calculated value
                             bytes_out_diff =  int(interface.get("statistics").get("out-octets", {})) - int(i.get('previos_octets_out', 0))
                             interface.update({'previos_octets_out': interface.get("statistics").get("out-octets", {})})
-                            calc_1 = bytes_out_diff * 8 / 20
-
+                            calc_1 = bytes_out_diff * 8 / self.polling_interval
                             mbps_out = calc_1 / 1e+6 
 
                             bytes_in_diff = int(interface.get("statistics").get("in-octets", {})) - int(i.get('previos_octets_in', 0))
                             interface.update({'previos_octets_in': interface.get("statistics").get("in-octets", {})})
-                            calc_1 = bytes_in_diff * 8 / 20 #polling interval == 20, arbitrary 
+                            calc_1 = bytes_in_diff * 8 / self.polling_interval
                             mbps_in = calc_1 / 1e+6 
 
                         except (AttributeError, OSError, ValueError) as e:
@@ -136,11 +139,13 @@ class CalcBandwidth:
             self.last_poll = interface_stats
 
         else:
-            self.poll_interval = self.poll_interval =+ 1
+            self.poll_iteration = self.poll_iteration =+ 1
             #Create new k/v for next poll calculations
+
             for interface in interface_stats:
                 interface['previos_octets_out'] = int(interface.get("statistics").get("out-octets", {}))
                 interface['previos_octets_in'] = int(interface.get("statistics").get("in-octets", {}))
+
             #store the modifed data structure as our last poll for comparison with next poll
             self.last_poll = interface_stats
 
