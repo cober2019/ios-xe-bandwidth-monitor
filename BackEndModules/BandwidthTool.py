@@ -9,7 +9,7 @@ from json.decoder import JSONDecodeError
 warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 headers = {"Content-Type": 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
 
-def _check_api_error(response) -> bool:
+def _check_api_error(response:json) -> bool:
 
     is_error = False
 
@@ -21,7 +21,7 @@ def _check_api_error(response) -> bool:
     
     return is_error
 
-def get_interface_details(ip, port, username, password) -> list:
+def get_interface_details(ip:str, port:int, username:str, password:str) -> list:
     """Gets interface IP information using IETF model"""
 
     interfaces_details = []
@@ -43,7 +43,7 @@ def get_interface_details(ip, port, username, password) -> list:
 
     return interfaces_details
 
-def get_interface_stats(ip, port, username, password) -> list:
+def get_interface_stats(ip:str, port:int, username:str, password:str) -> list:
     """Collects interface stats"""
 
     interfaces_stats = []
