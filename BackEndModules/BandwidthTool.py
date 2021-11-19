@@ -78,7 +78,7 @@ def get_interface_stats(ip:str, port:int, username:str, password:str) -> list:
 
     return interfaces_stats
 
-def bandwidth_calculation(interface_stats, i, polling_interval):
+def bandwidth_calculation(interface_stats:dict, i:dict, polling_interval:int):
 
     mbps_out = 0
     mbps_in = 0
@@ -96,7 +96,7 @@ def bandwidth_calculation(interface_stats, i, polling_interval):
             calc_1 = bytes_in_diff * 8 / polling_interval / 1000
             mbps_in = calc_1 / 1e+6 
 
-        except (AttributeError, OSError, ValueError) as e:
+        except (AttributeError, ValueError, TypeError):
             pass
         finally:
             # We dont want negative number. This will happen of there is a counter rollover
