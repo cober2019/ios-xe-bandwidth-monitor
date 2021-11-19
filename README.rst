@@ -51,4 +51,4 @@ The following dependencies are required. If you don't have the following depende
 **Other**
   This program communicates  using two protocols, ssh and https/restconf. All connectivity is located in BackendModules/device_calls.py
   
-.. image:: https://github.com/cober2019/ios-xe-bandwidth-monitor/blob/main/images/liveInterfaces.PNG
+.. image:: https://github.com/cober2019/ios-xe-bandwidth-monitor/blob/main/images/bandwdith.PNG
