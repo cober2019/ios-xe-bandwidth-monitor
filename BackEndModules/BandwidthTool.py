@@ -38,7 +38,7 @@ def get_interface_details(ip, port, username, password) -> list:
 
         interfaces_details = interfaces.get('ietf-interfaces:interface', {})
 
-    except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, AttributeError) as e:
+    except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, AttributeError):
         pass
 
     return interfaces_details
@@ -72,7 +72,7 @@ def get_interface_stats(ip, port, username, password) -> list:
                 ints_stats['description'] = int_details.get('description', 'n/a')
 
 
-    except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, AttributeError) as e:
+    except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL, AttributeError):
         pass
 
     return interfaces_stats
