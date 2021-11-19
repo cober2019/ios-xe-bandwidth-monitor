@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Form from "react-bootstrap/Form";
 import axios from 'axios';
 import {useRecoilState} from 'recoil';
 import { ErrorBoundary } from  'react-error-boundary'
@@ -14,6 +15,7 @@ import { IsErrorFallback } from "./errorComponent";
 import { PageLoader } from './pageLoader';
 import { BandwidthDiff } from './bandwidthFunctions';
 import { ShowInterface } from './interfaceModal';
+import { SetInterval } from './pollingInterval';
 import {encytpKey, client}  from '../App'
 
 export function IetfLiveInterfaces(){
@@ -23,16 +25,16 @@ export function IetfLiveInterfaces(){
   const [modalShow, setModalShow] = React.useState(false);
   const [selectInterface, setSelectInterface] = React.useState(undefined)
   const passwordDecrypt = AES.decrypt(localStorage.getItem('password'), decrypt);
-
   const { isLoading, error, data, isFetching } = useQuery(localStorage.getItem('ip') + 'interface_stats_ietf', async () => {
 
-    const data = await axios.post('/interface_stats_ietf')
+    const data = await axios.post('/interface_stats_ietf', {'pollingInterval': localStorage.getItem('pollingInterval')})
+    console.log(data)
 
     return data
         
     },
     {
-      refetchInterval: intervalMs,
+      refetchInterval: parseInt(localStorage.getItem('pollingInterval')),
     }
   )
 
@@ -61,16 +63,19 @@ export function IetfLiveInterfaces(){
                       <Row>
                       <Col xl={2}>
                         <Row>
+                          
                           { data.data.stats.map((value) => (
                                 <button key={value} type="button" style={{marginBottom: "10px"}} className="btn btn-success btn-md" onClick={()=> interfaceFocus(value)}>{value.name}</button>
                                 ))}
                         </Row>
+                        <Row className="border-bottom mb-3 mt-3" style={{color: 'black'}}/>
+                        <SetInterval/>
                       </Col>
                       <Col xl={10}>
                         <Row>
                             { data.data.stats.map((value) => (
                                 <Col xl={4} key={value}>
-                                {CreateCard(<IetfInterfaceCard key={value.name} value={value}/>, value.name)}
+                                {CreateCard(<IetfInterfaceCard key={value.name} isPolling={isFetching} value={value}/>, value.name)}
                                 </Col>
                             ))}
                         </Row>
@@ -80,7 +85,6 @@ export function IetfLiveInterfaces(){
                         :  
                         <></>}
                 </Container>
-
   }
   else if (isLoading){
 

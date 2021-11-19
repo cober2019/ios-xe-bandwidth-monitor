@@ -10,9 +10,8 @@ export  function IetfInterfaceCard(props){
   const interfacesChart = useRef(null)
   const interfacesRef = React.createRef()
 
-
   useEffect(() => {
-    if(interfacesChart.current !== null){
+    if(interfacesChart.current !== null && !props.isPolling){
       try{
         let updatedChart = UpdateChart(interfacesChart.current, parseInt(props.value['mbps_out']), parseInt(props.value['mbps_in']));
         updatedChart.update()
@@ -31,8 +30,6 @@ export  function IetfInterfaceCard(props){
     }
     catch{}
   }, [props.value, interfacesRef])
-
-  console.log(props.value)
 
 return      <div id={props.key}>
             <Row>

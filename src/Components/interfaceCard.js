@@ -39,7 +39,7 @@ return      <div id={props.value.name}>
             </Row>
             <br/>
               <Row>
-                  <Col xl={3}>
+                  <Col xl={3} style={{textAlign: "left"}}>
                     <p className="card-text">Speed:</p>
                     <p className="card-text">Status:</p>
                     <p className="card-text">IP:</p>
@@ -49,7 +49,7 @@ return      <div id={props.value.name}>
                     <p className="card-text">Mbps Out Diff:</p>
                     <p className="card-text">Mbps In Diff:</p>
                   </Col>
-                  <Col xl={3}>
+                  <Col xl={3} style={{textAlign: "left"}}>
                     <p className="card-text">{Math.round(parseInt(props.value.speed) / 1000000000) * 1000 } (Mbps)</p>
                     <p className="card-text">{props.value['oper-status']}</p>
                     {props.value.ipv4 ? <p className="card-text">{props.value.ipv4}</p> : <p className="card-text">n/a</p>}
@@ -59,7 +59,7 @@ return      <div id={props.value.name}>
                     <p className="card-text">{props.value.outbandwidthDiff}</p>
                     <p className="card-text">{props.value.inbandwidthDiff}</p>
                   </Col>
-                  <Col xl={3}>
+                  <Col xl={3} style={{textAlign: "left"}}>
                     <p className="card-text">PPs Out:</p>
                     <p className="card-text">PPs In:</p>
                     <p className="card-text">InDis:</p>
@@ -70,7 +70,7 @@ return      <div id={props.value.name}>
                     <p className="card-text">InDis:</p>
 
                   </Col>
-                  <Col xl={3}>
+                  <Col xl={3} style={{textAlign: "left"}}>
                     <p className="card-text">{props.value['statistics']['rx-pps']}</p>
                     <p className="card-text">{props.value['statistics']['tx-pps']}</p>
                     <p className="card-text">{props.value['statistics']['in-discards']}</p>
@@ -83,11 +83,11 @@ return      <div id={props.value.name}>
                   </Col>
                 </Row>
                 <Row>
-                  <Col xl={3} className="mt-3">
+                  <Col xl={3} className="mt-3" style={{textAlign: "left"}}>
                   <p className="card-text">Description:</p>
                     <p className="card-text">LastChange:</p>
                   </Col>
-                  <Col xl={9} className="mt-3">
+                  <Col xl={9} className="mt-3" style={{textAlign: "left"}}>
                   <p className="card-text">{props.value.description}</p>
                     <p className="card-text">{props.value['statistics']['discontinuity-time'].split('.')[0]}</p>
                   </Col>

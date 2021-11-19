@@ -33,10 +33,7 @@ export function DeviceAuth(){
                 localStorage.setItem('port', 443);
                 localStorage.setItem('username', username);
                 localStorage.setItem('password', encryptPassword.toString());
-                localStorage.setItem('model', response.data.model);
-                localStorage.setItem('serial', response.data.serial);
-                localStorage.setItem('uptime', response.data.uptime);
-                localStorage.setItem('software', response.data.software)
+                localStorage.setItem('pollingInterval', 20000)
                 setModalShow(false)
                 setAuth(true)
                 return response.data
