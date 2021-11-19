@@ -115,7 +115,7 @@ class CalcBandwidth:
 
                             bytes_in_diff = int(interface.get("statistics").get("in-octets", {})) - int(i.get('previos_octets_in', 0))
                             interface.update({'previos_octets_in': interface.get("statistics").get("in-octets", {})})
-                            calc_1 = bytes_in_diff * 8 / 20
+                            calc_1 = bytes_in_diff * 8 / 20 #polling interval == 20, arbitrary 
                             mbps_in = calc_1 / 1e+6 
 
                         except (AttributeError, OSError, ValueError) as e:
