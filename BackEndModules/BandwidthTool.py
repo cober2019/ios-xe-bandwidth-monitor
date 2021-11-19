@@ -1,6 +1,5 @@
 """Bandwidth calculator class used to poll and calculate various statistics"""
 
-import collections
 import requests
 import json
 import warnings
@@ -79,6 +78,39 @@ def get_interface_stats(ip:str, port:int, username:str, password:str) -> list:
 
     return interfaces_stats
 
+def bandwidth_calculation(interface_stats, i, polling_interval):
+
+    mbps_out = 0
+    mbps_in = 0
+
+    if interface_stats.get("name") == i.get("name"):
+        try:
+            #Calculate stats subtract old stats from new. Conver from bytes to bits and divide. O yea, add new k/v to dictionary witht the calculated value
+            bytes_out_diff =  int(interface_stats.get("statistics").get("out-octets", {})) - int(i.get('previos_octets_out', 0))
+            interface_stats.update({'previos_octets_out': interface_stats.get("statistics").get("out-octets", {})})
+            calc_1 = bytes_out_diff * 8 / polling_interval
+            mbps_out = calc_1 / 1e+6 
+
+            bytes_in_diff = int(interface_stats.get("statistics").get("in-octets", {})) - int(i.get('previos_octets_in', 0))
+            interface_stats.update({'previos_octets_in': interface_stats.get("statistics").get("in-octets", {})})
+            calc_1 = bytes_in_diff * 8 / polling_interval / 1000
+            mbps_in = calc_1 / 1e+6 
+
+        except (AttributeError, OSError, ValueError) as e:
+            pass
+        finally:
+            # We dont want negative number. This will happen of there is a counter rollover
+            if mbps_out < 0:
+                mbps_out = 0
+
+            interface_stats['mbps_out'] = mbps_out
+
+            if mbps_in < 0:
+                mbps_in = 0
+
+            interface_stats['mbps_in'] = mbps_in
+
+    return interface_stats
 
 class CalcBandwidth:
     """Bandwidth calculation class"""
@@ -95,47 +127,17 @@ class CalcBandwidth:
 
     def get_interface_bandwith_all(self, polling_interval:int=None):
         """Calculate outbound bandwidth"""
-        
-        mbps_out = 0
-        mbps_in = 0
-
-        if polling_interval is not None:
-            self.polling_interval = polling_interval / 1000
-
+    
         #Get Interface stats
         interface_stats = get_interface_stats(self.host, self.port, self.username, self.password)
 
         #Check interval, the program will show really larger numbers if will dont skip interval one
         if self.last_poll is not None or self.poll_iteration > 1:
             self.poll_iteration = 2
+
             for interface in interface_stats:
                 for i in self.last_poll:
-                    if interface.get("name") == i.get("name"):
-                        try:
-                            #Calculate stats subtract old stats from new. Conver from bytes to bits and divide. O yea, add new k/v to dictionary witht the calculated value
-                            bytes_out_diff =  int(interface.get("statistics").get("out-octets", {})) - int(i.get('previos_octets_out', 0))
-                            interface.update({'previos_octets_out': interface.get("statistics").get("out-octets", {})})
-                            calc_1 = bytes_out_diff * 8 / self.polling_interval
-                            mbps_out = calc_1 / 1e+6 
-
-                            bytes_in_diff = int(interface.get("statistics").get("in-octets", {})) - int(i.get('previos_octets_in', 0))
-                            interface.update({'previos_octets_in': interface.get("statistics").get("in-octets", {})})
-                            calc_1 = bytes_in_diff * 8 / self.polling_interval
-                            mbps_in = calc_1 / 1e+6 
-
-                        except (AttributeError, OSError, ValueError) as e:
-                            pass
-                        finally:
-                            # We dont want negative number. This will happen of there is a counter rollover
-                            if mbps_out < 0:
-                                mbps_out = 0
-
-                            interface['mbps_out'] = mbps_out
-
-                            if mbps_in < 0:
-                                mbps_in = 0
-
-                            interface['mbps_in'] = mbps_in
+                    bandwidth_calculation(interface, i, polling_interval)
 
             # store the modifed data structure as our last poll for comparison with next poll
             self.last_poll = interface_stats
