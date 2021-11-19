@@ -66,8 +66,8 @@ def live_interfaces():
 @app.route('/interface_stats_ietf', methods=['POST', 'GET'])
 def interface_stats():
     """Get interface stats via IETF-interface yang model"""
-
-    bandwidth_usage_all = bandwidth_object.get_interface_bandwith_all()
+    print(request.json)
+    bandwidth_usage_all = bandwidth_object.get_interface_bandwith_all(int(request.json.get('pollingInterval')))
 
     return {'stats': bandwidth_usage_all}
     
