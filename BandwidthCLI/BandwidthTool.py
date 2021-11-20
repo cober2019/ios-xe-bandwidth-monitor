@@ -10,6 +10,63 @@ import time
 warnings.filterwarnings('ignore', message='Unverified HTTPS request')
 headers = {"Content-Type": 'application/yang-data+json', 'Accept': 'application/yang-data+json'}
 
+def convert_to_mbps(interface) -> dict:
+    """Convert Kbps to Mbps"""
+
+    interface['statistics']['tx-kbps'] = int(interface['statistics']['tx-kbps']) / 1000
+    interface['statistics']['rx-kbps'] = int(interface['statistics']['rx-kbps']) / 1000
+    if interface['oper-status'] == 'if-oper-state-ready':
+        interface['oper-status'] = 'up'
+    else:
+        interface['oper-status'] = 'down'
+
+    return interface
+
+def get_interfaces(ip, port, username, password) -> dict:
+    """Gets real time interface statistics using IOS-XE\n
+        Cisco-IOS-XE-interfaces-oper:interfaces and live arp data via Cisco-IOS-XE-arp-oper:arp-data/arp-vrf"""
+
+    data = {}
+    interface_data = {}
+
+    try:
+        uri = f"https://{ip}:{port}/restconf/data/Cisco-IOS-XE-interfaces-oper:interfaces"
+        response = requests.get(uri, headers=headers, verify=False, auth=(username, password))
+        interface_data = json.loads(response.text).get('Cisco-IOS-XE-interfaces-oper:interfaces').get('interface')
+        check_error = _check_api_error(interface_data)
+
+        if check_error:
+            raise AttributeError
+
+    except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL,UnboundLocalError, AttributeError):
+        pass
+    
+    if interface_data:
+        try:
+            for interface in interface_data:
+                #Collect inter qos statistics. Commence policy breakdown
+                convert_bandwidth = convert_to_mbps(interface)
+                data[interface.get('name')] = {'interface': interface.get('name'), 'data': convert_bandwidth}
+                
+        except (JSONDecodeError, requests.exceptions.ConnectionError, requests.exceptions.InvalidURL):
+            for interface in interface_data:
+                convert_bandwidth = convert_to_mbps(interface)
+                data[interface.get('name')] = {'interface': interface.get('name'), 'data': convert_bandwidth}
+
+    return data
+
+def _check_api_error(response:json) -> bool:
+
+    is_error = False
+
+    try:
+        if list(response.keys())[0] == 'errors':
+            is_error = True
+    except IndexError:
+        pass
+    
+    return is_error
+
 def get_interface_details(ip:str, port:int, username:str, password:str) -> list:
     """Gets interface IP information using IETF model"""
 
@@ -150,18 +207,22 @@ if __name__ == '__main__':
     print('Bandwidth Monitor')
     ip = input('Host: ')
     username = input('Username: ')
-    password = input('Password')
-    port = input('Port:')
+    password = input('Password: ')
+    port = input('Port: ')
 
     bandwidth = CalcBandwidth(ip, port, username, password)
     polling_interval = input('Polling Interval: ')
+    print(f"{'\nInterface':>25} {'Mbps Out':>25} {'Mbps In':>25}")
+    print('-' * 100 + '\n')
     while True:
         stats = bandwidth.get_interface_bandwith_all(polling_interval)
         for i in stats:
             try:
-                print(f"{i.get('name'):>25} {i.get('mbps_out'):>25} {i.get('mbps_in'):>25}")
+                print(f"{i.get('name'):>25} {i.get('mbps_out'):>25} {i.get('mbps_in'):>25}\n")
             except TypeError:
                 pass
         time.sleep(int(polling_interval))
+        print(f"{'Interface':>25} {'Mbps Out':>25} {'Mbps In':>25}")
+        print('-' * 100 + '\n')
 
     
