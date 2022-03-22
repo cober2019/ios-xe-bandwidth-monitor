@@ -4,8 +4,6 @@
 XE-Bandwidth Monitoring
 ========================
 
-View interface bandwdith for Cisco devices running XE Code. Device must be able to use Restconf protocol. Demo: http://40.114.68.103:3000/live_interfaces
-
 Requirements:
 --------------
 
